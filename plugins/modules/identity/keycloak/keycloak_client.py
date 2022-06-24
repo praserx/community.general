@@ -157,6 +157,16 @@ options:
         type: list
         elements: str
 
+    backchannel_logout_url:
+        description:
+            - URL that will cause the client to log itself out when a logout request is sent to this
+              realm (via end_session_endpoint). If omitted, no logout request will be sent to the
+              client is this case.
+              This is 'backchannelLogoutUrl' in the Keycloak REST API.
+        aliases:
+            - backchannelLogoutUrl
+        type: str
+
     not_before:
         description:
             - Revoke any tokens issued before this date for this client (this is a UNIX timestamp).
@@ -603,6 +613,7 @@ EXAMPLES = '''
       - http://localhost:8888/
     web_origins:
       - https://www.example.com/*
+    backchannel_logout_url: https://www.example.com/oauth?logout=bachchannel
     not_before: 1507825725
     bearer_only: False
     consent_required: False
@@ -795,6 +806,7 @@ def main():
         default_roles=dict(type='list', elements='str', aliases=['defaultRoles']),
         redirect_uris=dict(type='list', elements='str', aliases=['redirectUris']),
         web_origins=dict(type='list', elements='str', aliases=['webOrigins']),
+        backchannel_logout_url=dict(type='str', aliases=['backchannelLogoutUrl']),
         not_before=dict(type='int', aliases=['notBefore']),
         bearer_only=dict(type='bool', aliases=['bearerOnly']),
         consent_required=dict(type='bool', aliases=['consentRequired']),
